@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	interval := 30 * time.Second
+	interval := 20 * time.Minute
 	go eye_strain_ticker(interval, &RealNotif{})
 
 	quitChannel := make(chan os.Signal, 1)
