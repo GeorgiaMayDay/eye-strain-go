@@ -1,4 +1,4 @@
-module hello
+module eye-strain
 
 go 1.22.6
 
