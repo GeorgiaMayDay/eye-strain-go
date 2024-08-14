@@ -21,7 +21,7 @@ func TestTicker(t *testing.T) {
 		t.Errorf("No Error")
 	}
 
-	if expected_err != errTest {
+	if expected_err.Error() != "called correctly" {
 		t.Errorf("Wrong Error")
 	}
 
