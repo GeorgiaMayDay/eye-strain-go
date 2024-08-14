@@ -26,11 +26,16 @@ func (fn *FakeNotif) Notif(header, body string) error {
 func TestNotif(t *testing.T) {
 
 	t.Run("Timer works correctly", func(t *testing.T) {
-		mockNotif := FakeNotif{count: 0}
+		mockNotif := &FakeNotif{count: 0}
 		mockNotif.count += 2
-		go eye_strain_ticker(3*time.Millisecond, 1*time.Microsecond, &mockNotif)
+		go eye_strain_ticker(3*time.Millisecond, 1*time.Microsecond, mockNotif)
 
-		fmt.Printf("Within Test:%d", mockNotif.count)
+		got := mockNotif.count
+		want := 2
+
+		if got != want {
+			t.Errorf("got %d want %d", got, want)
+		}
 	})
 
 	t.Run("create notification works", func(t *testing.T) {
