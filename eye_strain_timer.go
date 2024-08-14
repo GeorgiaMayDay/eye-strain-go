@@ -23,6 +23,13 @@ func main() {
 	fmt.Println("Adios!")
 }
 
+// Manages the timings of the notificaton for eye strain
+//
+// Parameters:
+//
+//	interval time.Duration
+//	lookAwayInterval time.Duration
+//	Notif notifier
 func eye_strain_ticker(interval, lookAwayInterval time.Duration, Notif notifer) {
 	ticker := time.NewTicker(interval)
 	for range ticker.C {
@@ -39,6 +46,15 @@ type notifer interface {
 
 type RealNotif struct{}
 
+// Wrapper function for Beeep libraries Notify, inserts same photo
+// Parameter:
+
+// 	header string
+// 	body string
+
+// Return:
+
+// err error
 func (rn *RealNotif) Notif(header, body string) error {
 	err := beeep.Notify(header, body, "Eye-Image.png")
 	if err != nil {
