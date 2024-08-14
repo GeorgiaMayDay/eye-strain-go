@@ -12,7 +12,8 @@ import (
 
 func main() {
 	interval := 20 * time.Minute
-	go eye_strain_ticker(interval, &RealNotif{})
+	lookAwayInterval := 20 * time.Second
+	go eye_strain_ticker(interval, lookAwayInterval, &RealNotif{})
 
 	quitChannel := make(chan os.Signal, 1)
 	signal.Notify(quitChannel, syscall.SIGINT, syscall.SIGTERM)
@@ -22,12 +23,14 @@ func main() {
 	fmt.Println("Adios!")
 }
 
-func eye_strain_ticker(interval time.Duration, Notif notifer) {
+func eye_strain_ticker(interval, lookAwayInterval time.Duration, Notif notifer) {
 	ticker := time.NewTicker(interval)
 	for range ticker.C {
 		createNotif(Notif, "Eye Care Time", "Look Away")
+		lookBackTimer := time.NewTimer(lookAwayInterval)
+		<-lookBackTimer.C
+		createNotif(Notif, "Screen Time", "Look Back")
 	}
-
 }
 
 type notifer interface {
